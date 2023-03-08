@@ -11,7 +11,7 @@ class Node:
     def __lt__(self, other):
         return self.freq < other.freq
     
-    def parcoursProfondeur(self):
+    def parcours_profondeur(self):
         """parcours l'arbre en profondeur et retourne une liste contenant les informations relatives à chaque nœud visité"""
 
         res = [] 

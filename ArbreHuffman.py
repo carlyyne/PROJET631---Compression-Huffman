@@ -7,7 +7,7 @@ class ArbreHuffman:
         self.file = file
         self.racine = self.ConstructionArbreCodage(file.alphabet_trie())
     
-    def ConstructionArbreCodage(self,alphabet):
+    def construction_arbre_codage(self,alphabet):
         listeNoeuds =[]
 
         #creation liste de noeuds pour chaque caractere de l'alphabet avec la frequence associée
@@ -26,7 +26,7 @@ class ArbreHuffman:
     
 
     def parcours_profondeur(self):
-        return self.racine.parcoursProfondeur()
+        return self.racine.parcours_profondeur()
     
     """ affiche l'arbre ninaire dans un .pdf pour avoir un aperçu grâce au module de visualisation graphviz"""
     def afficher_arbre_binaire(self):

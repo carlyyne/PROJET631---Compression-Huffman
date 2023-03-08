@@ -17,11 +17,11 @@ def taux_compression(nomFichier):
     return taux
 
 """ Calcul du nombre moyen de Bit du fichier compressé à partir du parcours en profondeur """
-def nombre_moyen_bit(liste_parcours_prof):
-    nb_element = len(liste_parcours_prof) 
+def nombre_moyen_bit(liste_parcours_profondeur):
+    nb_element = len(liste_parcours_profondeur) 
     bits_total = 0
     for i in range(nb_element):
-        bits_total += len(liste_parcours_prof[i][2])
+        bits_total += len(liste_parcours_profondeur[i][2])
     return bits_total/nb_element
 
 if __name__ == "__main__":
@@ -40,7 +40,7 @@ if __name__ == "__main__":
 
     ########################## ETAPE 2: CONSTRUCTION DE L'ARBRE ##########################
     arbre = ArbreHuffman(f)
-    arbre.ConstructionArbreCodage(Alphabet)
+    arbre.construction_arbre_codage(Alphabet)
     arbre.afficher_arbre_binaire().render(f"{fichier.split('.')[0]}/tree") # à changer suivant le texte
 
     ############################## ETAPE 3: CODAGE DU TEXTE ##############################
