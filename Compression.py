@@ -1,5 +1,4 @@
 import os
-import struct
 from bitarray import bitarray
 
 class Compression:
@@ -7,7 +6,7 @@ class Compression:
         self.arbre = arbre
 
     def texte_binaire(self, fichier):
-        """ Retourne un texte binaire correspondant au texte d'origine """
+        """ Retourne un texte binaire correspondant au texte d'origine grâce a un parcours en profondeur de l'arbre"""
         txt_binaire = ''
         liste_parcours_profondeur = self.arbre.parcours_profondeur()
         for lettre in fichier.lire_fichier():
@@ -18,7 +17,6 @@ class Compression:
 
     
     def fichier_texte_compresse(self, fichier, fichier_texte_origine):
-
         """ Converti le texteBinaire en Octets """
         bits = self.texte_binaire(fichier)
         bits = bits.strip() #supprime les espaces,tabulations et sauts de lignes

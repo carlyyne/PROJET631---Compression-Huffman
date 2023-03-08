@@ -1,3 +1,4 @@
+
 class Node:
     def __init__(self, char, freq, leftChild = None, rightChild = None,code = ""):
         self.char = char
@@ -11,13 +12,11 @@ class Node:
         return self.freq < other.freq
     
     def parcoursProfondeur(self):
-        res = []
-        nb = f"0{str(len(self.code))}b"
-        if self.code != '':
-            res.append([self.char, self.freq, format(int(self.code,2),nb)])
-        else:
-            res.append([self.char, self.freq, self.code])
-            
+        """parcours l'arbre en profondeur et retourne une liste contenant les informations relatives à chaque nœud visité"""
+
+        res = [] 
+        res.append([self.char, self.freq, self.code])
+                   
         if self.leftChild:
             self.leftChild.code = self.code + "0"
             res += self.leftChild.parcoursProfondeur()
@@ -25,3 +24,4 @@ class Node:
             self.rightChild.code = self.code + "1"
             res += self.rightChild.parcoursProfondeur()
         return res
+        

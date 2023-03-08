@@ -9,14 +9,14 @@ from Compression import Compression
 from ArbreHuffman import ArbreHuffman
 import os
 
-# Calcul du taux de compression par rapport au volume final et au volume initial
+""" Calcul du taux de compression par rapport au volume final et au volume initial """
 def taux_compression(nomFichier):
     volume_final = os.path.getsize(f"{nomFichier.split('.')[0]}/{nomFichier.split('.')[0]}_comp.bin")
     volume_initial = os.path.getsize(nomFichier)
     taux = 1 - volume_final/volume_initial
     return taux
 
-#Calcul du nombre moyen de Bit du fichier compressé à partir du parcours en profondeur
+""" Calcul du nombre moyen de Bit du fichier compressé à partir du parcours en profondeur """
 def nombre_moyen_bit(liste_parcours_prof):
     nb_element = len(liste_parcours_prof) 
     bits_total = 0
@@ -30,8 +30,9 @@ if __name__ == "__main__":
     fichierTexte = 'extraitalice.txt'
     fichierTexte1 = 'alice.txt'
     fichierTexte2 = "textesimple.txt"
+    fichier = fichierTexte2
 
-    f = MonFichier(fichierTexte1) # à changer suivant le texte
+    f = MonFichier(fichier) # à changer suivant le texte
 
     ########## ETAPE 1: DETERMINATION DE L'ALPHABET ET FREQUENCES DES CARACTERES ##########
     Alphabet = f.alphabet_trie()
@@ -40,14 +41,14 @@ if __name__ == "__main__":
     ########################## ETAPE 2: CONSTRUCTION DE L'ARBRE ##########################
     arbre = ArbreHuffman(f)
     arbre.ConstructionArbreCodage(Alphabet)
-    arbre.afficher_arbre_binaire().render(f"{fichierTexte1.split('.')[0]}/tree") # à changer suivant le texte
+    arbre.afficher_arbre_binaire().render(f"{fichier.split('.')[0]}/tree") # à changer suivant le texte
 
     ############################## ETAPE 3: CODAGE DU TEXTE ##############################
     c = Compression(arbre)
-    c.fichier_texte_compresse(f,fichierTexte1) # à changer suivant le texte
+    c.fichier_texte_compresse(f,fichier) # à changer suivant le texte
     
     ################### ETAPE 4: DETERMINATION DU TAUX DE COMPRESSION ###################
-    print("Taux de compression: "+ str(taux_compression(fichierTexte1))) #a changer suivant le texte
+    print("Taux de compression: "+ str(taux_compression(fichier))) #a changer suivant le texte
 
     ################### ETAPE 5 : DÉTERMINATION NOMBRE MOYEN DE BITS ################### 
     print("Nombre moyen de bits de stockage d’un caractère du texte compressé: " + str(nombre_moyen_bit(arbre.parcours_profondeur())))  

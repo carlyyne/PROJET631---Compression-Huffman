@@ -27,28 +27,26 @@ class ArbreHuffman:
 
     def parcours_profondeur(self):
         return self.racine.parcoursProfondeur()
-        
+    
+    """ affiche l'arbre ninaire dans un .pdf pour avoir un aperçu grâce au module de visualisation graphviz"""
     def afficher_arbre_binaire(self):
+        graph = graphviz.Digraph() # Création d'un objet Graphviz
+        self.ajouter_noeud(graph,self.racine) # Ajout de la racine de l'arbre
+        return graph # Retourne l'objet Graphviz représentant l'arbre binaire
+    
+    def ajouter_noeud(self, graph, noeud):
 
-        # id(): retourne un identifiant unique pour chaque objet, ce qui garantit que chaque nœud de l'arbre aura un identifiant distinct dans l'objet Graphviz.
-        graph = graphviz.Digraph()
-        graph.node(str(id(self.racine)), label=str(self.racine.freq))
+        # ajout du noeud à graphviz avec son nom et sa fréquence
+        graph.node(str(id(noeud)), label=f"{noeud.char}({noeud.freq})") # id(): retourne un identifiant unique pour chaque objet, ce qui garantit que chaque nœud de l'arbre aura un identifiant distinct dans l'objet Graphviz.
 
-        def ajouter_noeud(node):
-            if node.leftChild:
-                if node.leftChild.char != "":
-                    graph.node(str(id(node.leftChild)), label=f"{str(node.leftChild.freq)},{node.leftChild.char}") 
-                else:
-                    graph.node(str(id(node.leftChild)), label=str(node.leftChild.freq))
-                graph.edge(str(id(node)), str(id(node.leftChild)),'0')
-                ajouter_noeud(node.leftChild)
-            if node.rightChild:
-                if node.rightChild.char != "":
-                    graph.node(str(id(node.rightChild)), label=f"{str(node.rightChild.freq)},{node.rightChild.char}")
-                else:
-                    graph.node(str(id(node.rightChild)), label=str(node.rightChild.freq))
-                graph.edge(str(id(node)), str(id(node.rightChild)),'1')
-                ajouter_noeud(node.rightChild)
+        if noeud.leftChild:
+            # ajout du fils gauche
+            self.ajouter_noeud(graph, noeud.leftChild)
+            # ajout de l'arc reliant le noeud courant à son fils gauche
+            graph.edge(str(id(noeud)), str(id(noeud.leftChild)), label="0")
 
-        ajouter_noeud(self.racine)
-        return graph
+        if noeud.rightChild:
+            # ajout du fils droit
+            self.ajouter_noeud(graph, noeud.rightChild)
+            # ajout de l'arc reliant le noeud courant à son fils droit
+            graph.edge(str(id(noeud)), str(id(noeud.rightChild)), label="1") 
