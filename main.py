@@ -1,22 +1,10 @@
-# envoie Git
-# git add .
-# git commit -m "message"
-# git push
-# git status (à jour)
-
 from MonFichier import MonFichier
 from Compression import Compression
 from ArbreHuffman import ArbreHuffman
 
-if __name__ == "__main__":
+def run(cheminFichierTxt):
 
-    ############################### FICHIERS À DISPOSITION ###############################
-    fichierTexte = 'extraitalice.txt'
-    fichierTexte1 = 'alice.txt'
-    fichierTexte2 = "textesimple.txt"
-    fichier = fichierTexte2
-
-    f = MonFichier(fichier) # à changer suivant le texte
+    f = MonFichier(cheminFichierTxt)
 
     ########## ETAPE 1: DETERMINATION DE L'ALPHABET ET FREQUENCES DES CARACTERES ##########
     Alphabet = f.alphabet_trie()
@@ -25,16 +13,30 @@ if __name__ == "__main__":
     ########################## ETAPE 2: CONSTRUCTION DE L'ARBRE ##########################
     arbre = ArbreHuffman(f)
     arbre.construction_arbre_codage(Alphabet)
-    arbre.afficher_arbre_binaire().render(f"{fichier.split('.')[0]}/tree") # à changer suivant le texte
+    arbre.afficher_arbre_binaire().render(f"{f.nom_fichier.split('.')[0]}/tree")
 
     ############################## ETAPE 3: CODAGE DU TEXTE ##############################
-    c = Compression(arbre)
-    c.fichier_texte_compresse(f,fichier) # à changer suivant le texte
+    fc = Compression(arbre)
+    fc.fichier_texte_compresse(f,f.nom_fichier)
     
     ################### ETAPE 4: DETERMINATION DU TAUX DE COMPRESSION ###################
-    print("Taux de compression: "+ str(c.tauxCompression)) #a changer suivant le texte
+    print("----------- "+cheminFichierTxt + " -----------")
+    print("Taux de compression: " + str(fc.tauxCompression))
 
     ################### ETAPE 5 : DÉTERMINATION NOMBRE MOYEN DE BITS ################### 
-    print("Nombre moyen de bits de stockage d’un caractère du texte compressé: " + str(c.nbMoyenBit))  
+    print("Nombre moyen de bits de stockage d’un caractère: " + str(fc.nbMoyenBit))  
+
+if __name__ == "__main__":
+
+    ############################### FICHIERS À DISPOSITION ###############################
+    fichierTexte = "textesimple.txt"
+    fichierTexte1 = "extraitalice.txt"
+    fichierTexte2 = "alice.txt"
+
+    ############################## COMPRESSION DES FICHIERS ##############################
+    run(fichierTexte)
+    run(fichierTexte1)
+    run(fichierTexte2)
+
 
     

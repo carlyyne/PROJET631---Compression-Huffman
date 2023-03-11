@@ -6,11 +6,14 @@ class MonFichier:
         self.nom_fichier = nom_fichier
 
     def lire_fichier(self):
+        """ Lecture du fichier """
+
         with open(self.nom_fichier, 'r') as fichier:
             return fichier.read()
         
-    """ Creation d'un dictionnaire (non trié) avec les caratères et leur fréquence """
     def frequence(self):
+        """ Creation d'un dictionnaire (non trié) avec les caratères et leur fréquence """
+
         frequence = {}
 
         # Parcours du fichier texte lu
@@ -24,15 +27,16 @@ class MonFichier:
 
         return frequence
 
-    """ Dictionnaire final trié: l'ordre des caractères de l’alphabet est maintenu par fréquence croissante puis par ordre de codage des caractères ASCII """
     def alphabet_trie(self):
+        """ Création du dictionnaire final trié: l'ordre des caractères de l’alphabet est maintenu par fréquence croissante puis par ordre de codage des caractères ASCII """
+
         f = self.frequence()
         alphabet = dict(sorted(f.items(), key=lambda t: t[0])) # tri de l'alphabet par ordre croissant de cle (frequence)
         alphabet = dict(sorted(alphabet.items(), key=lambda t: t[1])) # tri de l'aplphabet par ordre croissant de valeur (caractere)
         return alphabet
 
-    """ Creation d'un fichier avec les caratères et leur fréquence """
     def creation_fichier_alphabet(self):
+        """ Creation d'un fichier _freq.txt avec les caratères et leur fréquence """
 
         chemin_dossier = f"{self.nom_fichier.split('.')[0]}/"
         if not os.path.exists(chemin_dossier):

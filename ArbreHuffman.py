@@ -8,6 +8,7 @@ class ArbreHuffman:
         self.racine = self.construction_arbre_codage(file.alphabet_trie())
     
     def construction_arbre_codage(self,alphabet):
+        """ Construction du l'arbre d'Huffman """
         listeNoeuds =[]
 
         #creation liste de noeuds pour chaque caractere de l'alphabet avec la frequence associée
@@ -23,21 +24,22 @@ class ArbreHuffman:
             listeNoeuds.sort() #tri de listeNoeuds par frequence
 
         return listeNoeuds[0] # l'arbre restant
-    
 
     def parcours_profondeur(self):
         return self.racine.parcours_profondeur()
     
-    """ affiche l'arbre ninaire dans un .pdf pour avoir un aperçu grâce au module de visualisation graphviz"""
     def afficher_arbre_binaire(self):
+        """ affiche l'arbre binaire dans un .pdf pour avoir un aperçu grâce au module de visualisation graphviz """
+
         graph = graphviz.Digraph() # Création d'un objet Graphviz
         self.ajouter_noeud(graph,self.racine) # Ajout de la racine de l'arbre
         return graph # Retourne l'objet Graphviz représentant l'arbre binaire
     
     def ajouter_noeud(self, graph, noeud):
-
+        
         # ajout du noeud à graphviz avec son nom et sa fréquence
-        graph.node(str(id(noeud)), label=f"{noeud.char}({noeud.freq})") # id(): retourne un identifiant unique pour chaque objet, ce qui garantit que chaque nœud de l'arbre aura un identifiant distinct dans l'objet Graphviz.
+        # id(): retourne un identifiant unique pour chaque objet, ce qui garantit que chaque nœud de l'arbre aura un identifiant distinct dans l'objet Graphviz.
+        graph.node(str(id(noeud)), label=f"{noeud.char}({noeud.freq})") 
 
         if noeud.leftChild:
             # ajout du fils gauche
