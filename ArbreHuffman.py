@@ -5,7 +5,7 @@ class ArbreHuffman:
     
     def __init__(self,file):
         self.file = file
-        self.racine = self.ConstructionArbreCodage(file.alphabet_trie())
+        self.racine = self.construction_arbre_codage(file.alphabet_trie())
     
     def construction_arbre_codage(self,alphabet):
         listeNoeuds =[]

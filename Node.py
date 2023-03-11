@@ -19,9 +19,9 @@ class Node:
                    
         if self.leftChild:
             self.leftChild.code = self.code + "0"
-            res += self.leftChild.parcoursProfondeur()
+            res += self.leftChild.parcours_profondeur()
         if self.rightChild:
             self.rightChild.code = self.code + "1"
-            res += self.rightChild.parcoursProfondeur()
+            res += self.rightChild.parcours_profondeur()
         return res
         

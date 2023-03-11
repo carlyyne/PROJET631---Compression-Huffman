@@ -7,22 +7,6 @@
 from MonFichier import MonFichier
 from Compression import Compression
 from ArbreHuffman import ArbreHuffman
-import os
-
-""" Calcul du taux de compression par rapport au volume final et au volume initial """
-def taux_compression(nomFichier):
-    volume_final = os.path.getsize(f"{nomFichier.split('.')[0]}/{nomFichier.split('.')[0]}_comp.bin")
-    volume_initial = os.path.getsize(nomFichier)
-    taux = 1 - volume_final/volume_initial
-    return taux
-
-""" Calcul du nombre moyen de Bit du fichier compressé à partir du parcours en profondeur """
-def nombre_moyen_bit(liste_parcours_profondeur):
-    nb_element = len(liste_parcours_profondeur) 
-    bits_total = 0
-    for i in range(nb_element):
-        bits_total += len(liste_parcours_profondeur[i][2])
-    return bits_total/nb_element
 
 if __name__ == "__main__":
 
@@ -48,9 +32,9 @@ if __name__ == "__main__":
     c.fichier_texte_compresse(f,fichier) # à changer suivant le texte
     
     ################### ETAPE 4: DETERMINATION DU TAUX DE COMPRESSION ###################
-    print("Taux de compression: "+ str(taux_compression(fichier))) #a changer suivant le texte
+    print("Taux de compression: "+ str(c.tauxCompression)) #a changer suivant le texte
 
     ################### ETAPE 5 : DÉTERMINATION NOMBRE MOYEN DE BITS ################### 
-    print("Nombre moyen de bits de stockage d’un caractère du texte compressé: " + str(nombre_moyen_bit(arbre.parcours_profondeur())))  
+    print("Nombre moyen de bits de stockage d’un caractère du texte compressé: " + str(c.nbMoyenBit))  
 
     
