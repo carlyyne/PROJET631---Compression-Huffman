@@ -7,42 +7,15 @@ class Compression:
         self.tauxCompression = 0
         self.nbMoyenBit = 0
 
-    def texte_binaire(self, fichier):
+    def texte_binaire(self, fichier,liste_parcours_profondeur):
         """ Converti le texte d'origine en un texte binaire, grâce a un parcours en profondeur de l'arbre """
-        
+
         txt_binaire = ''
-        liste_parcours_profondeur = self.arbre.parcours_profondeur()
-        for lettre in fichier.lire_fichier():
-            for i in range(len(liste_parcours_profondeur)):
-                if liste_parcours_profondeur[i][0] == f"'{lettre}'":
-                    txt_binaire += liste_parcours_profondeur[i][2]
+        for lettre in fichier.lire_fichier(): # parcours des caractères du fichier txt
+            for i in range(len(liste_parcours_profondeur)): # parcours de la liste obtenue grâce au parcours en profondeur de l'arbre
+                if liste_parcours_profondeur[i][0] == f"'{lettre}'": # cherche dans liste_parcours_profondeur la lettre souhaité
+                    txt_binaire += liste_parcours_profondeur[i][2] # le code de la lettre trouvée est ajouté à la chaine de caractère "txt_binaire"
         return txt_binaire
-
-    
-    def fichier_texte_compresse(self, fichier, cheminFichier):
-        """ Creation du fichier compressé """
-
-        bits = self.texte_binaire(fichier)
-        bits = bits.strip() #supprime les espaces,tabulations et sauts de lignes
-        liste_bits = []
-
-        for element in bits:
-            liste_bits.append(int(element))
-
-        octets = bitarray(liste_bits)
-        
-        #creation d'un dossier avec pour nom le nom du fichier si il n'existe pas déjà
-        chemin_dossier = f"{cheminFichier.split('.')[0]}/"
-        if not os.path.exists(chemin_dossier):
-            os.makedirs(chemin_dossier)
-            
-        with open(f"{chemin_dossier}/{cheminFichier.split('.')[0]}_comp.bin", "wb") as nouv_fichier:
-            octets.tofile(nouv_fichier)
-        
-        # Données obtenues à partir du fichier_texte_compresse
-        liste_parcours_profondeur = self.arbre.parcours_profondeur()
-        self.taux_compression(cheminFichier) #ajout du taux de compression du fichier compressé
-        self.nombre_moyen_bit(liste_parcours_profondeur) #ajout du nombre moyen de bits du fichier compressé
 
     def taux_compression(self, cheminFichier):
         """ Calcul du taux de compression par rapport au volume final et au volume initial """
@@ -60,3 +33,28 @@ class Compression:
         for i in range(nb_element):
             bits_total += len(liste_parcours_profondeur[i][2])
         self.nbMoyenBit= bits_total/nb_element    
+
+    def fichier_texte_compresse(self, fichier, cheminFichier):
+        """ Creation du fichier compressé """
+
+        liste_parcours_profondeur = self.arbre.parcours_profondeur()
+        bits = self.texte_binaire(fichier,liste_parcours_profondeur)
+        bits = bits.strip() #supprime les espaces,tabulations et sauts de lignes
+        liste_entiers = []
+
+        for element in bits:
+            liste_entiers.append(int(element))
+
+        bits = bitarray(liste_entiers)
+        
+        #creation d'un dossier avec pour nom le nom du fichier si il n'existe pas déjà
+        chemin_dossier = f"{cheminFichier.split('.')[0]}/"
+        if not os.path.exists(chemin_dossier):
+            os.makedirs(chemin_dossier)
+            
+        with open(f"{chemin_dossier}/{cheminFichier.split('.')[0]}_comp.bin", "wb") as nouv_fichier:
+            bits.tofile(nouv_fichier)
+        
+        # Données obtenues à partir du fichier_texte_compresse
+        self.taux_compression(cheminFichier) #ajout du taux de compression du fichier compressé
+        self.nombre_moyen_bit(liste_parcours_profondeur) #ajout du nombre moyen de bits du fichier compressé
