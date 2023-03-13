@@ -34,6 +34,20 @@ class Compresseur:
             bits_total += len(liste_parcours_profondeur[i][2])
         self.nbMoyenBit= bits_total/nb_element    
 
+    def nombre_moyen_bit_pondere(self, liste_parcours_profondeur):
+        """Calcul du nombre moyen de bits du fichier compressé à partir du parcours en profondeur"""
+
+        bits_total = 0
+        poids_total = 0
+
+        for i in range(len(liste_parcours_profondeur)):
+            bit = len(liste_parcours_profondeur[i][2])
+            poids = liste_parcours_profondeur[i][1]
+            bits_total += bit * poids
+            poids_total += poids
+
+        self.nbMoyenBit = bits_total / poids_total
+
     def fichier_texte_compresse(self, fichier, cheminFichier):
         """ Creation du fichier compressé """
 
@@ -57,4 +71,4 @@ class Compresseur:
         
         # Données obtenues à partir du fichier_texte_compresse
         self.taux_compression(cheminFichier) #ajout du taux de compression du fichier compressé
-        self.nombre_moyen_bit(liste_parcours_profondeur) #ajout du nombre moyen de bits du fichier compressé
+        self.nombre_moyen_bit_pondere(liste_parcours_profondeur) #ajout du nombre moyen de bits du fichier compressé
