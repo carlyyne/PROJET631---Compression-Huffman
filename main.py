@@ -1,5 +1,5 @@
 from MonFichier import MonFichier
-from Compression import Compression
+from Compresseur import Compresseur
 from ArbreHuffman import ArbreHuffman
 
 def run(cheminFichierTxt):
@@ -16,7 +16,7 @@ def run(cheminFichierTxt):
     arbre.afficher_arbre_binaire().render(f"{f.nom_fichier.split('.')[0]}/tree")
 
     ############################## ETAPE 3: CODAGE DU TEXTE ##############################
-    fc = Compression(arbre)
+    fc = Compresseur(arbre)
     fc.fichier_texte_compresse(f,f.nom_fichier)
     
     ################### ETAPE 4: DETERMINATION DU TAUX DE COMPRESSION ###################

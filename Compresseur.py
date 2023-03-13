@@ -1,7 +1,7 @@
 import os
 from bitarray import bitarray
 
-class Compression:
+class Compresseur:
     def __init__(self, arbre):
         self.arbre = arbre
         self.tauxCompression = 0
